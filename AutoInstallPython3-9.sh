@@ -4,9 +4,11 @@ num=0
 #安装目录
 if [ ! -e  $filePath ]; then
     mkdir -p /usr/local/python3
-elif [ ! -e $filePath/make ]; then 
+fi
+if [ ! -e $filePath/make ]; then 
     mkdir -p $filePath/make
-elif [ ! -e $filePath/Configure ]; then 
+fi
+if [ ! -e $filePath/Configure ]; then 
     mkdir -p $filePath/Configure
     touch $filePath/Configure/err-configure.log
 fi

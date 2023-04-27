@@ -20,7 +20,7 @@ installAndClean(){
 
 # 安装wget命令并且安装python依赖
 installPackage(){
-    yum -y install wget zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gdbm-devel db4-devel libpcap-devel xz-devel gcc make
+    yum -y install wget libffi-devel zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gdbm-devel db4-devel libpcap-devel xz-devel gcc make
     return $?
 }
 
@@ -41,8 +41,8 @@ installPython(){
     echo "正在添加python配置..."
     if [ ! -e  $filePath/Configure/err-configure.log ]; then
         touch $filePath/Configure/err-configure.log
-        
-    elif [ ! -e  $filePath/Configure/run-configure.log ];then
+    fi
+    if [ ! -e  $filePath/Configure/run-configure.log ];then
         touch $filePath/Configure/run-configure.log
     fi
     if $(./configure --prefix=$filePath 1>$filePath/Configure/run-configure.log 2>$filePath/Configure/err-configure.log); then
@@ -51,15 +51,16 @@ installPython(){
         if [ ! -e  $filePath/make/run-make.log ]; then
             touch $filePath/make/run-make.log 
             
-        elif [ ! -e  $filePath/make/err-make.log ];then
+        fi
+        if [ ! -e  $filePath/make/err-make.log ];then
             touch $filePath/make/err-make.log
         fi
         if $(make 1>$filePath/make/run-make.log 2>$filePath/make/err-make.log); then
             echo "正在make install编译安装Python目录文件..."
             if [ ! -e  $filePath/make/run-make-install.log ]; then
                 touch $filePath/make/run-make-install.log 
-                
-            elif [ ! -e  $filePath/make/err-make-install.log ];then
+            fi    
+            if [ ! -e  $filePath/make/err-make-install.log ];then
                 touch $filePath/make/err-make-install.log
             fi
             if $(make install 1>$filePath/make/run-make-install.log 2>$filePath/make/err-make-install.log); then
